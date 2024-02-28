@@ -1,0 +1,19 @@
+.radix-themes {
+  /* --default-font-size: 18px; */
+  --tomato-9: hsla(17, 100%, 54%, 1);
+}
+
+.rt-Heading {
+  text-wrap: pretty;
+}
+.rt-Text {
+  text-wrap: pretty;
+}
+
+/* Overrides for size-3 token */
+.rt-TextFieldInput:where(.rt-r-size-3) {
+  height: var(--space-8);
+}
+.rt-BaseButton:where(.rt-r-size-3) {
+  --base-button-height: var(--space-8);
+}
