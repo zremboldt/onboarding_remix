@@ -5,11 +5,11 @@ import { Form, useActionData } from "@remix-run/react";
 import { useRef } from "react";
 
 import { updateUser } from "~/models/user.server";
-import { getUser, requireUserId } from "~/session.server";
+import { requireUser, requireUserId } from "~/session.server";
 import { useRootLoaderData } from "~/utils";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { dob } = await getUser(request);
+  const { dob } = await requireUser(request);
   if (!dob) {
     return null;
   }

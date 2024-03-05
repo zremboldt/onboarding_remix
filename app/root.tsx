@@ -32,6 +32,42 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+const chime = {
+  name: "Chime",
+  accentColor: "green",
+  radius: "full",
+  scaling: "110%",
+  transition: "8",
+  logo: (
+    <img
+      width={90}
+      src="https://www.chime.com/wp-content/themes/project-sscms-2024-03-01T14-37-47/images/brand/chime-logo.svg"
+    />
+  ),
+};
+
+const carvana = {
+  name: "Carvana",
+  accentColor: "cyan",
+  radius: "small",
+  scaling: "100%",
+  transition: "0",
+  logo: (
+    <img
+      width={140}
+      src="https://chesterfieldbusinessnews.com/site/wp-content/uploads/2021/04/Carvana-Logo.png"
+    />
+  ),
+};
+
+const root = {
+  name: "Root",
+  accentColor: "tomato",
+  radius: "medium",
+  scaling: "100%",
+  transition: "0",
+};
+
 export default function App() {
   const outlet = useOutlet();
   const location = useLocation();
@@ -40,43 +76,7 @@ export default function App() {
       ? location.pathname
       : "/which-vehicles";
 
-  const chime = {
-    name: "Chime",
-    accentColor: "green",
-    radius: "full",
-    scaling: "110%",
-    transition: "8",
-    logo: (
-      <img
-        width={90}
-        src="https://www.chime.com/wp-content/themes/project-sscms-2024-03-01T14-37-47/images/brand/chime-logo.svg"
-      />
-    ),
-  };
-
-  const carvana = {
-    name: "Carvana",
-    accentColor: "cyan",
-    radius: "small",
-    scaling: "100%",
-    transition: "0",
-    logo: (
-      <img
-        width={140}
-        src="https://chesterfieldbusinessnews.com/site/wp-content/uploads/2021/04/Carvana-Logo.png"
-      />
-    ),
-  };
-
-  const root = {
-    name: "Root",
-    accentColor: "tomato",
-    radius: "medium",
-    scaling: "100%",
-    transition: "0",
-  };
-
-  const THEME = { ...root, appearance: "light" };
+  let THEME = { ...root, appearance: "light" };
 
   return (
     <html lang="en">
@@ -107,9 +107,9 @@ export default function App() {
               <motion.div
                 className="main-content-wrap"
                 key={key}
-                initial={{ x: `${THEME.transition}%`, opacity: 0 }}
+                initial={{ x: `0%`, opacity: 0 }}
                 animate={{ x: "0", opacity: 1 }}
-                exit={{ x: `-${THEME.transition}%`, opacity: 0 }}
+                exit={{ x: `-0%`, opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
               >
                 {outlet}
