@@ -9,8 +9,10 @@ export default function EndScene() {
   }, []);
 
   return (
-    <Flex direction="column" gap="5" align="center">
-      <Heading size="7">Download the Root app to continue</Heading>
+    <Flex direction="column" gap="5">
+      <Heading align={"center"} size="7">
+        Download the Root app to continue
+      </Heading>
     </Flex>
   );
 }

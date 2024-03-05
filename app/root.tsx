@@ -40,6 +40,26 @@ export default function App() {
       ? location.pathname
       : "/which-vehicles";
 
+  const chime = {
+    name: "Chime",
+    accentColor: "green",
+    radius: "full",
+    scaling: "110%",
+    appearance: "dark",
+    transition: "8",
+  };
+
+  const root = {
+    name: "Root",
+    accentColor: "tomato",
+    radius: "small",
+    scaling: "100%",
+    appearance: "dark",
+    transition: "0",
+  };
+
+  const THEME = root;
+
   return (
     <html lang="en">
       <head>
@@ -51,16 +71,23 @@ export default function App() {
 
       <body>
         <Theme
-          accentColor="tomato"
-          radius="small"
-          scaling="100%"
-          appearance={"dark"}
+          accentColor={THEME.accentColor}
+          radius={THEME.radius}
+          scaling={THEME.scaling}
+          appearance={THEME.appearance}
         >
           {/* <ThemePanel /> */}
 
           <header>
             <Link to="/name" className="logo-link">
-              <RootLogo />
+              {THEME.name === "Chime" ? (
+                <img
+                  width={90}
+                  src="https://www.chime.com/wp-content/themes/project-sscms-2024-03-01T14-37-47/images/brand/chime-logo.svg"
+                />
+              ) : (
+                <RootLogo />
+              )}
             </Link>
           </header>
 
@@ -69,9 +96,9 @@ export default function App() {
               <motion.div
                 className="main-content-wrap"
                 key={key}
-                initial={{ x: "0%", opacity: 0 }}
+                initial={{ x: `${THEME.transition}%`, opacity: 0 }}
                 animate={{ x: "0", opacity: 1 }}
-                exit={{ x: "-0%", opacity: 0 }}
+                exit={{ x: `-${THEME.transition}%`, opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
               >
                 {outlet}
