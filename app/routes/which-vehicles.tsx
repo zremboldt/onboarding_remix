@@ -11,16 +11,12 @@ import {
 } from "@radix-ui/themes";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import {
-  Outlet,
-  useFetcher,
-  useLoaderData,
-  useNavigate,
-} from "@remix-run/react";
+import { Outlet, useFetcher, useNavigate } from "@remix-run/react";
 import { FunctionComponent, useState } from "react";
 
 import { getVehicleListItems, updateVehicle } from "~/models/vehicle.server";
 import { requireUser } from "~/session.server";
+import { useRootLoaderData } from "~/utils";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { accountId } = await requireUser(request);
@@ -46,7 +42,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function WhichVehiclesScene() {
-  const { vehicles } = useLoaderData<typeof loader>();
+  const { vehicles } = useRootLoaderData();
   const navigate = useNavigate();
 
   return (
@@ -61,7 +57,7 @@ export default function WhichVehiclesScene() {
       <Flex direction="column" gap="3">
         {vehicles.length
           ? vehicles.map((vehicle) => (
-              <VehicleCard key={vehicle.id} vehicle={vehicle} />
+              <VehicleToggleCard key={vehicle.id} vehicle={vehicle} />
             ))
           : null}
 
@@ -94,7 +90,7 @@ export default function WhichVehiclesScene() {
   );
 }
 
-const VehicleCard: FunctionComponent<{
+const VehicleToggleCard: FunctionComponent<{
   vehicle: {
     id: string;
     year: number;

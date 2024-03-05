@@ -43,6 +43,7 @@
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "express": "^4.18.2",
+    "framer-motion": "^11.0.8",
     "isbot": "^3.7.0",
     "morgan": "^1.10.0",
     "prom-client": "^15.0.0",

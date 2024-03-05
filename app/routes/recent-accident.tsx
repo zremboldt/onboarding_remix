@@ -9,12 +9,18 @@ import {
   Separator,
   Text,
 } from "@radix-ui/themes";
-import type { ActionFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 
 import { updateUser } from "~/models/user.server";
-import { requireUserId } from "~/session.server";
+import { getUser, requireUserId } from "~/session.server";
+import { useRootLoaderData } from "~/utils";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const user = await getUser(request);
+  return json(user);
+};
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
@@ -36,6 +42,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function RecentAccidentScene() {
+  const { hadRecentAccident } = useRootLoaderData() || {};
   const actionData = useActionData<typeof action>();
 
   return (
@@ -46,7 +53,11 @@ export default function RecentAccidentScene() {
           in an accident or gotten a ticket?
         </Heading>
 
-        <RadioGroup.Root name="hadRecentAccident" size="3">
+        <RadioGroup.Root
+          name="hadRecentAccident"
+          defaultValue={hadRecentAccident?.toString()}
+          size="3"
+        >
           <Separator size="4" />
           <Text as="label" size="4">
             <Box px="4" py="4">

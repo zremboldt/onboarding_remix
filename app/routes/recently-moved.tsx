@@ -7,12 +7,18 @@ import {
   Separator,
   Text,
 } from "@radix-ui/themes";
-import type { ActionFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 
 import { updateUser } from "~/models/user.server";
-import { requireUserId } from "~/session.server";
+import { getUser, requireUserId } from "~/session.server";
+import { useRootLoaderData } from "~/utils";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const user = await getUser(request);
+  return json(user);
+};
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
@@ -34,6 +40,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function RecentlyMovedScene() {
+  const { recentlyMoved } = useRootLoaderData() || {};
   const actionData = useActionData<typeof action>();
 
   return (
@@ -41,7 +48,11 @@ export default function RecentlyMovedScene() {
       <Flex gap="5" direction="column">
         <Heading size="7">Have you moved in the last 6 months?</Heading>
 
-        <RadioGroup.Root name="recentlyMoved" size="3">
+        <RadioGroup.Root
+          name="recentlyMoved"
+          defaultValue={recentlyMoved?.toString()}
+          size="3"
+        >
           <Separator size="4" />
           <Text as="label" size="4">
             <Box px="4" py="4">

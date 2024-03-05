@@ -34,7 +34,7 @@ main {
   align-items: center;
   justify-content: center;
   margin-top: 60px;
-  padding: min(150px, 12vw) 10px 40px;
+  padding: min(150px, 12vw) 10px 100px;
 }
 
 .main-content-wrap {

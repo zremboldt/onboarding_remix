@@ -1,5 +1,5 @@
-import { useMatches } from "@remix-run/react";
-import { useMemo } from "react";
+import { useLoaderData, useMatches } from "@remix-run/react";
+import { useMemo, useState } from "react";
 
 import { createUser, type User } from "~/models/user.server";
 
@@ -171,4 +171,11 @@ export const createRandomVehicle = async ({
       includedOnPolicy: true,
     });
   }
+};
+
+export const useRootLoaderData = () => {
+  // TODO: I'd like to find a better way but for now this keeps data driven UI elements from dissappearing during the route animation
+  const data = useLoaderData();
+  const [dataState] = useState(data);
+  return data || dataState;
 };

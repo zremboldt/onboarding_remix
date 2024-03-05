@@ -6,16 +6,22 @@ import {
   Heading,
   Separator,
 } from "@radix-ui/themes";
-import type { ActionFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData } from "@remix-run/react";
 
 import { createAccount } from "~/models/account.server";
-import { createUser } from "~/models/user.server";
-import { createUserSession } from "~/session.server";
-import { safeRedirect } from "~/utils";
+import { createUser, updateUser } from "~/models/user.server";
+import { createUserSession, getSession, getUser } from "~/session.server";
+import { safeRedirect, useRootLoaderData } from "~/utils";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const user = await getUser(request);
+  return json(user);
+};
 
 export const action = async ({ request }: ActionFunctionArgs) => {
+  const session = await getSession(request);
   const formData = await request.formData();
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/dob");
   const firstName = formData.get("firstName");
@@ -35,6 +41,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     );
   }
 
+  // if user already has an active session, update their name instead of creating a new user
+  if (session.has("userId")) {
+    const id = session.get("userId");
+    console.log(id);
+    await updateUser(id, "firstName", firstName);
+    await updateUser(id, "lastName", lastName);
+    return redirect("/dob");
+  }
+
   const account = await createAccount();
   const user = await createUser({
     firstName,
@@ -52,6 +67,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function NameScene() {
+  const { firstName, lastName } = useRootLoaderData() || {};
   const actionData = useActionData<typeof action>();
 
   return (
@@ -78,6 +94,7 @@ export default function NameScene() {
           <TextField.Input
             size="3"
             name="firstName"
+            defaultValue={firstName}
             placeholder="First name"
             aria-invalid={actionData?.errors?.firstName ? true : undefined}
             aria-errormessage={
@@ -94,6 +111,7 @@ export default function NameScene() {
           <TextField.Input
             size="3"
             name="lastName"
+            defaultValue={lastName}
             placeholder="Last name"
             aria-invalid={actionData?.errors?.lastName ? true : undefined}
             aria-errormessage={

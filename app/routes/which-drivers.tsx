@@ -1,6 +1,5 @@
 import { InfoCircledIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import {
-  Avatar,
   Box,
   Button,
   Callout,
@@ -12,11 +11,13 @@ import {
 } from "@radix-ui/themes";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
+import { useFetcher, useNavigate } from "@remix-run/react";
 import { FunctionComponent, useState } from "react";
 
+import { TipCard } from "~/components/cards";
 import { getUsersOnAccount, updateUser } from "~/models/user.server";
 import { requireUser } from "~/session.server";
+import { useRootLoaderData } from "~/utils";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { accountId } = await requireUser(request);
@@ -41,7 +42,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function WhichDriversScene() {
-  const { users } = useLoaderData<typeof loader>();
+  const { users } = useRootLoaderData();
   const navigate = useNavigate();
 
   return (
@@ -51,25 +52,10 @@ export default function WhichDriversScene() {
           Which drivers will be covered on your policy?
         </Heading>
 
-        <Card size="2">
-          <Flex gap="4" align="center">
-            <Avatar size="5" radius="full" fallback="T" />
-            <Flex direction="column" gap="2">
-              <Text
-                as="div"
-                size="1"
-                weight="bold"
-                style={{ color: "var(--accent-9)" }}
-              >
-                ROOT SAVINGS TIP
-              </Text>
-              <Text as="div" size="3" weight="bold">
-                To maximize your savings, everyone on your policy must take the
-                test drive.
-              </Text>
-            </Flex>
-          </Flex>
-        </Card>
+        <TipCard
+          eyebrow="ROOT SAVINGS TIP"
+          body="To maximize your savings, everyone on your policy must take the test drive."
+        />
 
         <Text color="gray">
           All household members with a valid driver’s license, and other regular
@@ -83,10 +69,10 @@ export default function WhichDriversScene() {
 
       <Flex direction="column" gap="3">
         {users.map((user) => (
-          <UserCard key={user.id} user={user} />
+          <UserToggleCard key={user.id} user={user} />
         ))}
 
-        <Button type="submit" size="2" variant="outline">
+        <Button size="2" variant="outline">
           <PlusCircledIcon width="16" height="16" /> Add driver
         </Button>
 
@@ -109,7 +95,7 @@ export default function WhichDriversScene() {
   );
 }
 
-const UserCard: FunctionComponent<{
+const UserToggleCard: FunctionComponent<{
   user: {
     id: string;
     firstName: string;

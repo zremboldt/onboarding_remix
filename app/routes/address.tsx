@@ -1,11 +1,16 @@
 import { Button, Flex, Heading, Text, TextField } from "@radix-ui/themes";
-import type { ActionFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 
 import { updateUser } from "~/models/user.server";
-import { requireUser } from "~/session.server";
-import { prefillRequest } from "~/utils";
+import { getUser, requireUser } from "~/session.server";
+import { prefillRequest, useRootLoaderData } from "~/utils";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const user = await getUser(request);
+  return json(user);
+};
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const { id, accountId } = await requireUser(request);
@@ -26,16 +31,24 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function AddressScene() {
+  const { address } = useRootLoaderData() || {};
   const actionData = useActionData<typeof action>();
 
   return (
     <Form method="post">
-      <Flex direction="column" gap="5">
+      <Flex
+        direction="column"
+        gap="5"
+        style={{ viewTransitionName: "transition-content-wrap" }}
+      >
         <Heading size="7">What’s your home address?</Heading>
 
         <Flex direction="column" gap="3">
           <TextField.Input
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus
             size="3"
+            defaultValue={address}
             name="address"
             placeholder="Address, city, state, ZIP"
             aria-invalid={actionData?.errors?.address ? true : undefined}

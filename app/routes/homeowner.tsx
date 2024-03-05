@@ -7,12 +7,18 @@ import {
   Separator,
   Text,
 } from "@radix-ui/themes";
-import type { ActionFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 
 import { updateUser } from "~/models/user.server";
-import { requireUserId } from "~/session.server";
+import { getUser, requireUserId } from "~/session.server";
+import { useRootLoaderData } from "~/utils";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const user = await getUser(request);
+  return json(user);
+};
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
@@ -34,14 +40,21 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function HomeownerScene() {
+  const { homeowner } = useRootLoaderData() || {};
   const actionData = useActionData<typeof action>();
+
+  console.log(homeowner);
 
   return (
     <Form method="post">
       <Flex direction="column" gap="5">
         <Heading size="7">Do you rent or own your home?</Heading>
 
-        <RadioGroup.Root name="homeowner" size="3">
+        <RadioGroup.Root
+          name="homeowner"
+          defaultValue={homeowner?.toString()}
+          size="3"
+        >
           <Separator size="4" />
           <Text as="label" size="4">
             <Box px="4" py="4">

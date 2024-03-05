@@ -1,22 +1,25 @@
 import { Button, Flex, Heading, Text, TextField } from "@radix-ui/themes";
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useActionData, useLoaderData } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
 import { useRef } from "react";
 
-import { getUserById, updateUser } from "~/models/user.server";
-import { requireUserId } from "~/session.server";
+import { updateUser } from "~/models/user.server";
+import { getUser, requireUserId } from "~/session.server";
+import { useRootLoaderData } from "~/utils";
 
-// Not necessary but I'll keep it as an example
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const userId = await requireUserId(request);
-  const user = await getUserById(userId);
-
-  if (!user) {
-    throw new Response("Not Found", { status: 404 });
+  const { dob } = await getUser(request);
+  if (!dob) {
+    return null;
   }
 
-  return json({ user });
+  const date = new Date(dob);
+
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const year = String(date.getFullYear());
+  return json({ month, day, year });
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -48,10 +51,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     await updateUser(userId, "dob", dob);
     return redirect(`/address`);
   }
+  return json(
+    { errors: { dob: "Date of birth is required" }, routeTo: null },
+    { status: 400 },
+  );
 };
 
 export default function DobScene() {
-  const { user } = useLoaderData<typeof loader>();
+  const { month, day, year } = useRootLoaderData() || {};
   const actionData = useActionData<typeof action>();
   const monthRef = useRef<HTMLInputElement>(null);
   const dayRef = useRef<HTMLInputElement>(null);
@@ -88,17 +95,19 @@ export default function DobScene() {
   return (
     <Form method="post">
       <Flex direction="column" gap="5">
-        {/* <h2>Hi {user.firstName} 👋</h2> */}
         <Heading size="7">When’s your birthday?</Heading>
 
         <Flex direction="column" gap="3">
           <Flex direction="row" gap="3">
             <TextField.Input
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
               name="month"
               placeholder="MM"
               ref={monthRef}
               maxLength={2}
               size="3"
+              defaultValue={month}
               onChange={handleInputChange}
               autoComplete="off"
             />
@@ -108,6 +117,7 @@ export default function DobScene() {
               ref={dayRef}
               maxLength={2}
               size="3"
+              defaultValue={day}
               onChange={handleInputChange}
               autoComplete="off"
             />
@@ -117,6 +127,7 @@ export default function DobScene() {
               ref={yearRef}
               maxLength={4}
               size="3"
+              defaultValue={year}
               onChange={handleInputChange}
               autoComplete="off"
             />
