@@ -11,17 +11,17 @@ import { requireUser } from "~/session.server";
 import { useRootLoaderData } from "~/utils";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const user = await requireUser(request);
-  const vehicles = await getVehicleListItems({ accountId: user.accountId });
-  const users = await getUsersOnAccount({ accountId: user.accountId });
+  const pni = await requireUser(request);
+  const vehicles = await getVehicleListItems({ accountId: pni.accountId });
+  const users = await getUsersOnAccount({ accountId: pni.accountId });
 
   if (!users.length) {
     throw new Response("Not Found", { status: 404 });
   }
 
-  const skipCreateLogin = user.email !== null;
+  const nextRoute = !pni.email ? "/create-login" : "/end";
 
-  return json({ users, vehicles, skipCreateLogin });
+  return json({ users, vehicles, nextRoute });
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -41,7 +41,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function ProfileReviewScene() {
-  const { users, vehicles, skipCreateLogin } = useRootLoaderData();
+  const { users, vehicles, nextRoute } = useRootLoaderData();
   const navigate = useNavigate();
 
   return (
@@ -84,12 +84,7 @@ export default function ProfileReviewScene() {
 
         <Outlet />
 
-        <Button
-          onClick={() =>
-            skipCreateLogin ? navigate(`/end`) : navigate(`/create-login`)
-          }
-          size="3"
-        >
+        <Button onClick={() => navigate(nextRoute)} size="3">
           Continue
         </Button>
       </Flex>
