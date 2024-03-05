@@ -45,20 +45,38 @@ export default function App() {
     accentColor: "green",
     radius: "full",
     scaling: "110%",
-    appearance: "dark",
     transition: "8",
+    logo: (
+      <img
+        width={90}
+        src="https://www.chime.com/wp-content/themes/project-sscms-2024-03-01T14-37-47/images/brand/chime-logo.svg"
+      />
+    ),
+  };
+
+  const carvana = {
+    name: "Carvana",
+    accentColor: "cyan",
+    radius: "small",
+    scaling: "100%",
+    transition: "0",
+    logo: (
+      <img
+        width={140}
+        src="https://chesterfieldbusinessnews.com/site/wp-content/uploads/2021/04/Carvana-Logo.png"
+      />
+    ),
   };
 
   const root = {
     name: "Root",
     accentColor: "tomato",
-    radius: "small",
+    radius: "medium",
     scaling: "100%",
-    appearance: "dark",
     transition: "0",
   };
 
-  const THEME = root;
+  const THEME = { ...root, appearance: "light" };
 
   return (
     <html lang="en">
@@ -80,14 +98,7 @@ export default function App() {
 
           <header>
             <Link to="/name" className="logo-link">
-              {THEME.name === "Chime" ? (
-                <img
-                  width={90}
-                  src="https://www.chime.com/wp-content/themes/project-sscms-2024-03-01T14-37-47/images/brand/chime-logo.svg"
-                />
-              ) : (
-                <RootLogo />
-              )}
+              {THEME.name !== "Root" ? THEME.logo : <RootLogo />}
             </Link>
           </header>
 
