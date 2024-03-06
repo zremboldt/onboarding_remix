@@ -37,7 +37,7 @@ main {
   padding: min(150px, 12vw) 10px 100px;
 }
 
-.main-content-wrap {
+.scene-container {
   width: min(100%, 470px);
 }
 

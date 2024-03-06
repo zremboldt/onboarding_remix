@@ -35,39 +35,37 @@ export default function AddressScene() {
   const actionData = useActionData<typeof action>();
 
   return (
-    <Form method="post">
-      <Flex
-        direction="column"
-        gap="5"
-        style={{ viewTransitionName: "transition-content-wrap" }}
-      >
+    <div className="scene-container">
+      <Flex direction="column" gap="5">
         <Heading size="7">What’s your home address?</Heading>
 
-        <Flex direction="column" gap="3">
-          <TextField.Input
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
-            size="3"
-            defaultValue={address}
-            name="address"
-            placeholder="Address, city, state, ZIP"
-            aria-invalid={actionData?.errors?.address ? true : undefined}
-            aria-errormessage={
-              actionData?.errors?.address ? "address-error" : undefined
-            }
-          />
+        <Form method="post">
+          <Flex direction="column" gap="3">
+            <TextField.Input
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
+              size="3"
+              defaultValue={address}
+              name="address"
+              placeholder="Address, city, state, ZIP"
+              aria-invalid={actionData?.errors?.address ? true : undefined}
+              aria-errormessage={
+                actionData?.errors?.address ? "address-error" : undefined
+              }
+            />
 
-          {actionData?.errors?.address ? (
-            <Text size="1" color="red" trim="start">
-              {actionData.errors.address}
-            </Text>
-          ) : null}
+            {actionData?.errors?.address ? (
+              <Text size="1" color="red" trim="start">
+                {actionData.errors.address}
+              </Text>
+            ) : null}
 
-          <Button type="submit" size="3">
-            Continue
-          </Button>
-        </Flex>
+            <Button type="submit" size="3">
+              Continue
+            </Button>
+          </Flex>
+        </Form>
       </Flex>
-    </Form>
+    </div>
   );
 }

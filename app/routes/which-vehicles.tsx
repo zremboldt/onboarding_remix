@@ -46,47 +46,49 @@ export default function WhichVehiclesScene() {
   const navigate = useNavigate();
 
   return (
-    <Flex direction="column" gap="5">
-      <Flex direction="column" gap="3">
-        <Heading size="7">Which vehicles do you want to insure?</Heading>
-        <Text color="gray">
-          Need to add another vehicle? No worries, you can add more later.
-        </Text>
+    <div className="scene-container">
+      <Flex direction="column" gap="5">
+        <Flex direction="column" gap="3">
+          <Heading size="7">Which vehicles do you want to insure?</Heading>
+          <Text color="gray">
+            Need to add another vehicle? No worries, you can add more later.
+          </Text>
+        </Flex>
+
+        <Flex direction="column" gap="3">
+          {vehicles.length
+            ? vehicles.map((vehicle) => (
+                <VehicleToggleCard key={vehicle.id} vehicle={vehicle} />
+              ))
+            : null}
+
+          <Outlet />
+
+          <Button
+            size="2"
+            variant="outline"
+            onClick={() => navigate(`/which-vehicles/add-vehicle-dialog`)}
+          >
+            <PlusCircledIcon width="16" height="16" /> Add vehicle
+          </Button>
+
+          <Button onClick={() => navigate(`/which-drivers`)} size="3">
+            Continue
+          </Button>
+        </Flex>
+
+        <Callout.Root mt="8" color="gray">
+          <Callout.Icon>
+            <InfoCircledIcon />
+          </Callout.Icon>
+          <Callout.Text>
+            We pulled this information from public records. If there’s
+            information that you don’t recognize, you can ignore it–it won’t
+            affect your account.
+          </Callout.Text>
+        </Callout.Root>
       </Flex>
-
-      <Flex direction="column" gap="3">
-        {vehicles.length
-          ? vehicles.map((vehicle) => (
-              <VehicleToggleCard key={vehicle.id} vehicle={vehicle} />
-            ))
-          : null}
-
-        <Outlet />
-
-        <Button
-          size="2"
-          variant="outline"
-          onClick={() => navigate(`/which-vehicles/add-vehicle-dialog`)}
-        >
-          <PlusCircledIcon width="16" height="16" /> Add vehicle
-        </Button>
-
-        <Button onClick={() => navigate(`/which-drivers`)} size="3">
-          Continue
-        </Button>
-      </Flex>
-
-      <Callout.Root mt="8" color="gray">
-        <Callout.Icon>
-          <InfoCircledIcon />
-        </Callout.Icon>
-        <Callout.Text>
-          We pulled this information from public records. If there’s information
-          that you don’t recognize, you can ignore it–it won’t affect your
-          account.
-        </Callout.Text>
-      </Callout.Root>
-    </Flex>
+    </div>
   );
 }
 

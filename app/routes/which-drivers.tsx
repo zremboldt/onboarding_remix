@@ -46,52 +46,55 @@ export default function WhichDriversScene() {
   const navigate = useNavigate();
 
   return (
-    <Flex direction="column" gap="7">
-      <Flex direction="column" gap="3">
-        <Heading size="7">
-          Which drivers will be covered on your policy?
-        </Heading>
+    <div className="scene-container">
+      <Flex direction="column" gap="7">
+        <Flex direction="column" gap="3">
+          <Heading size="7">
+            Which drivers will be covered on your policy?
+          </Heading>
 
-        <TipCard
-          eyebrow="ROOT SAVINGS TIP"
-          body="To maximize your savings, everyone on your policy must take the test drive."
-        />
+          <TipCard
+            eyebrow="ROOT SAVINGS TIP"
+            body="To maximize your savings, everyone on your policy must take the test drive."
+          />
 
-        <Text color="gray">
-          All household members with a valid driver’s license, and other regular
-          operators of the insured vehicle(s), must be listed on your policy.
-        </Text>
-        <Text color="gray">
-          Household members with a valid driver’s license will only be covered
-          if they are listed.
-        </Text>
+          <Text color="gray">
+            All household members with a valid driver’s license, and other
+            regular operators of the insured vehicle(s), must be listed on your
+            policy.
+          </Text>
+          <Text color="gray">
+            Household members with a valid driver’s license will only be covered
+            if they are listed.
+          </Text>
+        </Flex>
+
+        <Flex direction="column" gap="3">
+          {users.map((user) => (
+            <UserToggleCard key={user.id} user={user} />
+          ))}
+
+          <Button size="2" variant="outline">
+            <PlusCircledIcon width="16" height="16" /> Add driver
+          </Button>
+
+          <Button onClick={() => navigate(`/recent-accident`)} size="3">
+            Continue
+          </Button>
+        </Flex>
+
+        <Callout.Root mt="8" color="gray">
+          <Callout.Icon>
+            <InfoCircledIcon />
+          </Callout.Icon>
+          <Callout.Text>
+            We pulled this information from public records. If there’s
+            information that you don’t recognize, you can ignore it–it won’t
+            affect your account.
+          </Callout.Text>
+        </Callout.Root>
       </Flex>
-
-      <Flex direction="column" gap="3">
-        {users.map((user) => (
-          <UserToggleCard key={user.id} user={user} />
-        ))}
-
-        <Button size="2" variant="outline">
-          <PlusCircledIcon width="16" height="16" /> Add driver
-        </Button>
-
-        <Button onClick={() => navigate(`/recent-accident`)} size="3">
-          Continue
-        </Button>
-      </Flex>
-
-      <Callout.Root mt="8" color="gray">
-        <Callout.Icon>
-          <InfoCircledIcon />
-        </Callout.Icon>
-        <Callout.Text>
-          We pulled this information from public records. If there’s information
-          that you don’t recognize, you can ignore it–it won’t affect your
-          account.
-        </Callout.Text>
-      </Callout.Root>
-    </Flex>
+    </div>
   );
 }
 

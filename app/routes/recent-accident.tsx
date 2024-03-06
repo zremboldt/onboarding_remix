@@ -46,47 +46,49 @@ export default function RecentAccidentScene() {
   const actionData = useActionData<typeof action>();
 
   return (
-    <Form method="post">
-      <Flex direction="column" gap="5">
-        <Heading size="7">
-          In the past 3 years, have you or any other drivers on your policy been
-          in an accident or gotten a ticket?
-        </Heading>
+    <div className="scene-container">
+      <Form method="post">
+        <Flex direction="column" gap="5">
+          <Heading size="7">
+            In the past 3 years, have you or any other drivers on your policy
+            been in an accident or gotten a ticket?
+          </Heading>
 
-        <RadioGroup.Root
-          name="hadRecentAccident"
-          defaultValue={hadRecentAccident?.toString()}
-          size="3"
-        >
-          <Separator size="4" />
-          <Text as="label" size="4">
-            <Box px="4" py="4">
-              <Flex justify="between">
-                Yes <RadioGroup.Item value="true" />
-              </Flex>
-            </Box>
-          </Text>
-          <Separator size="4" />
-          <Text as="label" size="4">
-            <Box px="4" py="4">
-              <Flex justify="between">
-                No <RadioGroup.Item value="false" />
-              </Flex>
-            </Box>
-          </Text>
-          <Separator size="4" />
-        </RadioGroup.Root>
+          <RadioGroup.Root
+            name="hadRecentAccident"
+            defaultValue={hadRecentAccident?.toString()}
+            size="3"
+          >
+            <Separator size="4" />
+            <Text as="label" size="4">
+              <Box px="4" py="4">
+                <Flex justify="between">
+                  Yes <RadioGroup.Item value="true" />
+                </Flex>
+              </Box>
+            </Text>
+            <Separator size="4" />
+            <Text as="label" size="4">
+              <Box px="4" py="4">
+                <Flex justify="between">
+                  No <RadioGroup.Item value="false" />
+                </Flex>
+              </Box>
+            </Text>
+            <Separator size="4" />
+          </RadioGroup.Root>
 
-        {actionData?.errors?.hadRecentAccident ? (
-          <Text size="1" color="red" trim="start">
-            {actionData.errors.hadRecentAccident}
-          </Text>
-        ) : null}
+          {actionData?.errors?.hadRecentAccident ? (
+            <Text size="1" color="red" trim="start">
+              {actionData.errors.hadRecentAccident}
+            </Text>
+          ) : null}
 
-        <Button type="submit" size="3">
-          Continue
-        </Button>
-      </Flex>
+          <Button type="submit" size="3">
+            Continue
+          </Button>
+        </Flex>
+      </Form>
       <Callout.Root mt="8" color="gray">
         <Callout.Icon>
           <InfoCircledIcon />
@@ -96,6 +98,6 @@ export default function RecentAccidentScene() {
           policy with Root, we’ll verify your driving record.
         </Callout.Text>
       </Callout.Root>
-    </Form>
+    </div>
   );
 }

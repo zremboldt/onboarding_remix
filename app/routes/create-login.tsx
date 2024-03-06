@@ -62,47 +62,49 @@ export default function CreateLoginScene() {
   const actionData = useActionData<typeof action>();
 
   return (
-    <Form method="post">
+    <div className="scene-container">
       <Flex direction="column" gap="5">
         <Flex direction="column" gap="3">
           <Heading size="7">Create an account to save your progress.</Heading>
           <Text color="gray">We’ll use your account to save your quote.</Text>
         </Flex>
 
-        <Flex direction="column" gap="3">
-          <TextField.Input
-            name="email"
-            type="email"
-            placeholder="Email"
-            autoComplete="email"
-            size="3"
-          />
+        <Form method="post">
+          <Flex direction="column" gap="3">
+            <TextField.Input
+              name="email"
+              type="email"
+              placeholder="Email"
+              autoComplete="email"
+              size="3"
+            />
 
-          {actionData?.errors?.email ? (
-            <Text size="1" color="red" trim="start">
-              {actionData.errors.email}
-            </Text>
-          ) : null}
+            {actionData?.errors?.email ? (
+              <Text size="1" color="red" trim="start">
+                {actionData.errors.email}
+              </Text>
+            ) : null}
 
-          <TextField.Input
-            name="password"
-            type="password"
-            placeholder="Create a strong password (at least 8 characters)"
-            // autoComplete="new-password"
-            size="3"
-          />
+            <TextField.Input
+              name="password"
+              type="password"
+              placeholder="Create a strong password (at least 8 characters)"
+              // autoComplete="new-password"
+              size="3"
+            />
 
-          {actionData?.errors?.password ? (
-            <Text size="1" color="red" trim="start">
-              {actionData.errors.password}
-            </Text>
-          ) : null}
+            {actionData?.errors?.password ? (
+              <Text size="1" color="red" trim="start">
+                {actionData.errors.password}
+              </Text>
+            ) : null}
 
-          <Button type="submit" size="3">
-            Create account
-          </Button>
-        </Flex>
+            <Button type="submit" size="3">
+              Create account
+            </Button>
+          </Flex>
+        </Form>
       </Flex>
-    </Form>
+    </div>
   );
 }

@@ -46,44 +46,46 @@ export default function HomeownerScene() {
   console.log(homeowner);
 
   return (
-    <Form method="post">
-      <Flex direction="column" gap="5">
-        <Heading size="7">Do you rent or own your home?</Heading>
+    <div className="scene-container">
+      <Form method="post">
+        <Flex direction="column" gap="5">
+          <Heading size="7">Do you rent or own your home?</Heading>
 
-        <RadioGroup.Root
-          name="homeowner"
-          defaultValue={homeowner?.toString()}
-          size="3"
-        >
-          <Separator size="4" />
-          <Text as="label" size="4">
-            <Box px="4" py="4">
-              <Flex justify="between">
-                Rent <RadioGroup.Item value="false" />
-              </Flex>
-            </Box>
-          </Text>
-          <Separator size="4" />
-          <Text as="label" size="4">
-            <Box px="4" py="4">
-              <Flex justify="between">
-                Own <RadioGroup.Item value="true" />
-              </Flex>
-            </Box>
-          </Text>
-          <Separator size="4" />
-        </RadioGroup.Root>
+          <RadioGroup.Root
+            name="homeowner"
+            defaultValue={homeowner?.toString()}
+            size="3"
+          >
+            <Separator size="4" />
+            <Text as="label" size="4">
+              <Box px="4" py="4">
+                <Flex justify="between">
+                  Rent <RadioGroup.Item value="false" />
+                </Flex>
+              </Box>
+            </Text>
+            <Separator size="4" />
+            <Text as="label" size="4">
+              <Box px="4" py="4">
+                <Flex justify="between">
+                  Own <RadioGroup.Item value="true" />
+                </Flex>
+              </Box>
+            </Text>
+            <Separator size="4" />
+          </RadioGroup.Root>
 
-        {actionData?.errors?.homeowner ? (
-          <Text size="1" color="red" trim="start">
-            {actionData.errors.homeowner}
-          </Text>
-        ) : null}
+          {actionData?.errors?.homeowner ? (
+            <Text size="1" color="red" trim="start">
+              {actionData.errors.homeowner}
+            </Text>
+          ) : null}
 
-        <Button type="submit" size="3">
-          Continue
-        </Button>
-      </Flex>
-    </Form>
+          <Button type="submit" size="3">
+            Continue
+          </Button>
+        </Flex>
+      </Form>
+    </div>
   );
 }

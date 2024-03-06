@@ -93,57 +93,59 @@ export default function DobScene() {
   };
 
   return (
-    <Form method="post">
+    <div className="scene-container">
       <Flex direction="column" gap="5">
         <Heading size="7">When’s your birthday?</Heading>
 
-        <Flex direction="column" gap="3">
-          <Flex direction="row" gap="3">
-            <TextField.Input
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus
-              name="month"
-              placeholder="MM"
-              ref={monthRef}
-              maxLength={2}
-              size="3"
-              defaultValue={month}
-              onChange={handleInputChange}
-              autoComplete="off"
-            />
-            <TextField.Input
-              name="day"
-              placeholder="DD"
-              ref={dayRef}
-              maxLength={2}
-              size="3"
-              defaultValue={day}
-              onChange={handleInputChange}
-              autoComplete="off"
-            />
-            <TextField.Input
-              name="year"
-              placeholder="YYYY"
-              ref={yearRef}
-              maxLength={4}
-              size="3"
-              defaultValue={year}
-              onChange={handleInputChange}
-              autoComplete="off"
-            />
+        <Form method="post">
+          <Flex direction="column" gap="3">
+            <Flex direction="row" gap="3">
+              <TextField.Input
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                autoFocus
+                name="month"
+                placeholder="MM"
+                ref={monthRef}
+                maxLength={2}
+                size="3"
+                defaultValue={month}
+                onChange={handleInputChange}
+                autoComplete="off"
+              />
+              <TextField.Input
+                name="day"
+                placeholder="DD"
+                ref={dayRef}
+                maxLength={2}
+                size="3"
+                defaultValue={day}
+                onChange={handleInputChange}
+                autoComplete="off"
+              />
+              <TextField.Input
+                name="year"
+                placeholder="YYYY"
+                ref={yearRef}
+                maxLength={4}
+                size="3"
+                defaultValue={year}
+                onChange={handleInputChange}
+                autoComplete="off"
+              />
+            </Flex>
+
+            {actionData?.errors?.dob ? (
+              <Text size="1" color="red" trim="start">
+                {actionData.errors.dob}
+              </Text>
+            ) : null}
+
+            <Button type="submit" size="3">
+              Continue
+            </Button>
           </Flex>
-
-          {actionData?.errors?.dob ? (
-            <Text size="1" color="red" trim="start">
-              {actionData.errors.dob}
-            </Text>
-          ) : null}
-
-          <Button type="submit" size="3">
-            Continue
-          </Button>
-        </Flex>
+        </Form>
       </Flex>
-    </Form>
+    </div>
   );
 }

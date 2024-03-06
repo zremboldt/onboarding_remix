@@ -44,44 +44,46 @@ export default function RecentlyMovedScene() {
   const actionData = useActionData<typeof action>();
 
   return (
-    <Form method="post">
-      <Flex gap="5" direction="column">
-        <Heading size="7">Have you moved in the last 6 months?</Heading>
+    <div className="scene-container">
+      <Form method="post">
+        <Flex gap="5" direction="column">
+          <Heading size="7">Have you moved in the last 6 months?</Heading>
 
-        <RadioGroup.Root
-          name="recentlyMoved"
-          defaultValue={recentlyMoved?.toString()}
-          size="3"
-        >
-          <Separator size="4" />
-          <Text as="label" size="4">
-            <Box px="4" py="4">
-              <Flex justify="between">
-                Yes <RadioGroup.Item value="true" />
-              </Flex>
-            </Box>
-          </Text>
-          <Separator size="4" />
-          <Text as="label" size="4">
-            <Box px="4" py="4">
-              <Flex justify="between">
-                No <RadioGroup.Item value="false" />
-              </Flex>
-            </Box>
-          </Text>
-          <Separator size="4" />
-        </RadioGroup.Root>
+          <RadioGroup.Root
+            name="recentlyMoved"
+            defaultValue={recentlyMoved?.toString()}
+            size="3"
+          >
+            <Separator size="4" />
+            <Text as="label" size="4">
+              <Box px="4" py="4">
+                <Flex justify="between">
+                  Yes <RadioGroup.Item value="true" />
+                </Flex>
+              </Box>
+            </Text>
+            <Separator size="4" />
+            <Text as="label" size="4">
+              <Box px="4" py="4">
+                <Flex justify="between">
+                  No <RadioGroup.Item value="false" />
+                </Flex>
+              </Box>
+            </Text>
+            <Separator size="4" />
+          </RadioGroup.Root>
 
-        {actionData?.errors?.recentlyMoved ? (
-          <Text size="1" color="red" trim="start">
-            {actionData.errors.recentlyMoved}
-          </Text>
-        ) : null}
+          {actionData?.errors?.recentlyMoved ? (
+            <Text size="1" color="red" trim="start">
+              {actionData.errors.recentlyMoved}
+            </Text>
+          ) : null}
 
-        <Button type="submit" size="3">
-          Continue
-        </Button>
-      </Flex>
-    </Form>
+          <Button type="submit" size="3">
+            Continue
+          </Button>
+        </Flex>
+      </Form>
+    </div>
   );
 }

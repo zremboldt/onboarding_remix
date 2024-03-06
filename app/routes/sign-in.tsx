@@ -32,7 +32,7 @@ export default function SignInScene() {
   const actionData = useActionData<typeof action>();
 
   return (
-    <Form method="post">
+    <div className="scene-container">
       <Flex direction="column" gap="5">
         <Flex direction="column" gap="3">
           <Heading size="7">Welcome back.</Heading>
@@ -41,26 +41,28 @@ export default function SignInScene() {
           </Text>
         </Flex>
 
-        <Flex direction="column" gap="3">
-          <TextField.Input
-            name="email"
-            type="email"
-            placeholder="Email"
-            autoComplete="email"
-            size="3"
-          />
+        <Form method="post">
+          <Flex direction="column" gap="3">
+            <TextField.Input
+              name="email"
+              type="email"
+              placeholder="Email"
+              autoComplete="email"
+              size="3"
+            />
 
-          {actionData?.errors?.email ? (
-            <Text size="1" color="red" trim="start">
-              {actionData.errors.email}
-            </Text>
-          ) : null}
+            {actionData?.errors?.email ? (
+              <Text size="1" color="red" trim="start">
+                {actionData.errors.email}
+              </Text>
+            ) : null}
 
-          <Button type="submit" size="3">
-            Continue
-          </Button>
-        </Flex>
+            <Button type="submit" size="3">
+              Continue
+            </Button>
+          </Flex>
+        </Form>
       </Flex>
-    </Form>
+    </div>
   );
 }

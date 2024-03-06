@@ -45,49 +45,51 @@ export default function ProfileReviewScene() {
   const navigate = useNavigate();
 
   return (
-    <Flex direction="column" gap="5">
-      <Heading size="7">How does your profile look?</Heading>
+    <div className="scene-container">
+      <Flex direction="column" gap="5">
+        <Heading size="7">How does your profile look?</Heading>
 
-      <Flex direction="column" gap="9">
-        <TipCard
-          eyebrow="GOOD TO KNOW"
-          body="Our app gives drivers like you discounts based on how you drive."
-        />
+        <Flex direction="column" gap="9">
+          <TipCard
+            eyebrow="GOOD TO KNOW"
+            body="Our app gives drivers like you discounts based on how you drive."
+          />
 
-        <Flex direction="column" gap="3">
-          <Heading size="3">Covered drivers</Heading>
-          {users
-            .filter(({ includedOnPolicy }) => includedOnPolicy === true)
-            .map((user) => (
-              <UserCard key={user.id} user={user} />
-            ))}
+          <Flex direction="column" gap="3">
+            <Heading size="3">Covered drivers</Heading>
+            {users
+              .filter(({ includedOnPolicy }) => includedOnPolicy === true)
+              .map((user) => (
+                <UserCard key={user.id} user={user} />
+              ))}
 
-          <Button size="2" variant="outline">
-            <PlusCircledIcon width="16" height="16" /> Add covered driver
+            <Button size="2" variant="outline">
+              <PlusCircledIcon width="16" height="16" /> Add covered driver
+            </Button>
+          </Flex>
+
+          <Flex direction="column" gap="3">
+            <Heading size="3">Vehicles</Heading>
+            {vehicles.length
+              ? vehicles
+                  .filter(({ includedOnPolicy }) => includedOnPolicy === true)
+                  .map((vehicle) => (
+                    <VehicleCard key={vehicle.id} vehicle={vehicle} />
+                  ))
+              : null}
+
+            <Button size="2" variant="outline">
+              <PlusCircledIcon width="16" height="16" /> Add vehicle
+            </Button>
+          </Flex>
+
+          <Outlet />
+
+          <Button onClick={() => navigate(nextRoute)} size="3">
+            Continue
           </Button>
         </Flex>
-
-        <Flex direction="column" gap="3">
-          <Heading size="3">Vehicles</Heading>
-          {vehicles.length
-            ? vehicles
-                .filter(({ includedOnPolicy }) => includedOnPolicy === true)
-                .map((vehicle) => (
-                  <VehicleCard key={vehicle.id} vehicle={vehicle} />
-                ))
-            : null}
-
-          <Button size="2" variant="outline">
-            <PlusCircledIcon width="16" height="16" /> Add vehicle
-          </Button>
-        </Flex>
-
-        <Outlet />
-
-        <Button onClick={() => navigate(nextRoute)} size="3">
-          Continue
-        </Button>
       </Flex>
-    </Flex>
+    </div>
   );
 }

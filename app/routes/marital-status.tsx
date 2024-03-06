@@ -42,40 +42,42 @@ export default function MaritalStatusScene() {
   const actionData = useActionData<typeof action>();
 
   return (
-    <Form method="post">
-      <Flex direction="column" gap="5">
-        <Heading size="7">What’s your marital status?</Heading>
+    <div className="scene-container">
+      <Form method="post">
+        <Flex direction="column" gap="5">
+          <Heading size="7">What’s your marital status?</Heading>
 
-        <RadioGroup.Root
-          defaultValue={maritalStatus}
-          name="marital-status"
-          size="3"
-        >
-          <Separator size="4" />
-          {["Single", "Married", "Widowed"].map((status) => (
-            <Box key={status}>
-              <Text as="label" size="4" key={status}>
-                <Box px="4" py="4">
-                  <Flex justify="between">
-                    {status} <RadioGroup.Item value={status.toLowerCase()} />
-                  </Flex>
-                </Box>
-              </Text>
-              <Separator size="4" />
-            </Box>
-          ))}
-        </RadioGroup.Root>
+          <RadioGroup.Root
+            defaultValue={maritalStatus}
+            name="marital-status"
+            size="3"
+          >
+            <Separator size="4" />
+            {["Single", "Married", "Widowed"].map((status) => (
+              <Box key={status}>
+                <Text as="label" size="4" key={status}>
+                  <Box px="4" py="4">
+                    <Flex justify="between">
+                      {status} <RadioGroup.Item value={status.toLowerCase()} />
+                    </Flex>
+                  </Box>
+                </Text>
+                <Separator size="4" />
+              </Box>
+            ))}
+          </RadioGroup.Root>
 
-        {actionData?.errors?.data.maritalStatus ? (
-          <Text size="1" color="red" trim="start">
-            {actionData.errors.data.maritalStatus}
-          </Text>
-        ) : null}
+          {actionData?.errors?.data.maritalStatus ? (
+            <Text size="1" color="red" trim="start">
+              {actionData.errors.data.maritalStatus}
+            </Text>
+          ) : null}
 
-        <Button type="submit" size="3">
-          Continue
-        </Button>
-      </Flex>
-    </Form>
+          <Button type="submit" size="3">
+            Continue
+          </Button>
+        </Flex>
+      </Form>
+    </div>
   );
 }

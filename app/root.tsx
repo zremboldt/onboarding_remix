@@ -102,20 +102,17 @@ export default function App() {
             </Link>
           </header>
 
-          <main>
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                className="main-content-wrap"
-                key={key}
-                initial={{ x: `0%`, opacity: 0 }}
-                animate={{ x: "0", opacity: 1 }}
-                exit={{ x: `-0%`, opacity: 0 }}
-                transition={{ duration: 0.2, ease: "easeInOut" }}
-              >
-                {outlet}
-              </motion.div>
-            </AnimatePresence>
-          </main>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.main
+              key={key}
+              initial={{ x: `0%`, opacity: 0 }}
+              animate={{ x: "0", opacity: 1 }}
+              exit={{ x: `-0%`, opacity: 0 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+            >
+              {outlet}
+            </motion.main>
+          </AnimatePresence>
 
           {/* <ScrollRestoration /> */}
           <Scripts />

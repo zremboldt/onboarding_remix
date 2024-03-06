@@ -71,7 +71,7 @@ export default function NameScene() {
   const actionData = useActionData<typeof action>();
 
   return (
-    <Form method="post">
+    <div className="scene-container">
       <Flex direction="column" gap="5">
         <Flex direction="column" gap="3">
           <Heading size="8">Get a quote in less than 5 minutes</Heading>
@@ -90,45 +90,47 @@ export default function NameScene() {
           </Text>
         </Flex>
 
-        <Flex direction="column" gap="3">
-          <TextField.Input
-            size="3"
-            name="firstName"
-            defaultValue={firstName}
-            placeholder="First name"
-            aria-invalid={actionData?.errors?.firstName ? true : undefined}
-            aria-errormessage={
-              actionData?.errors?.firstName ? "firstName-error" : undefined
-            }
-          />
+        <Form method="post">
+          <Flex direction="column" gap="3">
+            <TextField.Input
+              size="3"
+              name="firstName"
+              defaultValue={firstName}
+              placeholder="First name"
+              aria-invalid={actionData?.errors?.firstName ? true : undefined}
+              aria-errormessage={
+                actionData?.errors?.firstName ? "firstName-error" : undefined
+              }
+            />
 
-          {actionData?.errors?.firstName ? (
-            <Text size="1" color="red" trim="start">
-              {actionData.errors.firstName}
-            </Text>
-          ) : null}
+            {actionData?.errors?.firstName ? (
+              <Text size="1" color="red" trim="start">
+                {actionData.errors.firstName}
+              </Text>
+            ) : null}
 
-          <TextField.Input
-            size="3"
-            name="lastName"
-            defaultValue={lastName}
-            placeholder="Last name"
-            aria-invalid={actionData?.errors?.lastName ? true : undefined}
-            aria-errormessage={
-              actionData?.errors?.lastName ? "lastName-error" : undefined
-            }
-          />
+            <TextField.Input
+              size="3"
+              name="lastName"
+              defaultValue={lastName}
+              placeholder="Last name"
+              aria-invalid={actionData?.errors?.lastName ? true : undefined}
+              aria-errormessage={
+                actionData?.errors?.lastName ? "lastName-error" : undefined
+              }
+            />
 
-          {actionData?.errors?.lastName ? (
-            <Text size="1" color="red" trim="start">
-              {actionData.errors.lastName}
-            </Text>
-          ) : null}
+            {actionData?.errors?.lastName ? (
+              <Text size="1" color="red" trim="start">
+                {actionData.errors.lastName}
+              </Text>
+            ) : null}
 
-          <Button type="submit" size="3">
-            Continue
-          </Button>
-        </Flex>
+            <Button type="submit" size="3">
+              Continue
+            </Button>
+          </Flex>
+        </Form>
         <Text align={"center"} color="gray">
           Been here before?{" "}
           <Link
@@ -139,6 +141,6 @@ export default function NameScene() {
           </Link>
         </Text>
       </Flex>
-    </Form>
+    </div>
   );
 }
