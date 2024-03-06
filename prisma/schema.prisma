@@ -25,6 +25,7 @@ model User {
   recentlyMoved        Boolean?
   hadRecentAccident    Boolean?
   maritalStatus        String?
+  phone                String?
   pni                  Boolean   @default(false)
   includedOnPolicy     Boolean   @default(true)
   email                String?   @unique
