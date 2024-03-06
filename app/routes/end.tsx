@@ -33,6 +33,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   return "success";
 };
 
+// TODO: Make page responsive
+
 export default function EndScene() {
   const fetcher = useFetcher();
   const data = fetcher.data;
@@ -46,7 +48,7 @@ export default function EndScene() {
 
   return (
     <Flex direction="row">
-      <AspectRatio ratio={16 / 8}>
+      <AspectRatio ratio={7 / 4}>
         <img
           src={devicesImage}
           alt="Phones displaying the Root app"
@@ -57,7 +59,7 @@ export default function EndScene() {
           }}
         />
       </AspectRatio>
-      <Flex direction="column" gap="5">
+      <Flex direction="column" gap="5" mt="8">
         <Heading size="7">Download the Root app to continue</Heading>
         <Text color="gray">
           Thanks for completing your profile. Now it’s time to download the app,

@@ -41,6 +41,7 @@ const chime = {
   logo: (
     <img
       width={90}
+      alt="chime logo"
       src="https://www.chime.com/wp-content/themes/project-sscms-2024-03-01T14-37-47/images/brand/chime-logo.svg"
     />
   ),
@@ -55,6 +56,7 @@ const carvana = {
   logo: (
     <img
       width={140}
+      alt="carvana logo"
       src="https://chesterfieldbusinessnews.com/site/wp-content/uploads/2021/04/Carvana-Logo.png"
     />
   ),
